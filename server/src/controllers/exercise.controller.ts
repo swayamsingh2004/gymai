@@ -3,6 +3,8 @@ import { ApiError } from "../utils/ApiError";
 import { asyncHandler } from "../utils/asyncHandler";
 import { Workout } from "../models/workout.model";
 import { ApiResponse } from "../utils/ApiResponse";
+import { deleteCache } from "../services/cache.services";
+
 const addExercise=asyncHandler(async(req,res)=>{
     const{workoutId,exerciseName,sets}=req.body;
     if (!workoutId || !exerciseName) {
@@ -22,6 +24,10 @@ const addExercise=asyncHandler(async(req,res)=>{
 
 
     })
+    await deleteCache(req.user._id.toString())
+
+    
+    
     res.status(201).json(new ApiResponse(201,exercise,"Created Succesfully"))
 })
 const getExercises=asyncHandler(async(req,res)=>{

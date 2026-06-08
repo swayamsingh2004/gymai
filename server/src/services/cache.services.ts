@@ -11,4 +11,7 @@ async function getCached(key:string){
     }
     return JSON.parse(data);
 }
-export{getCached,setCache}
+async function deleteCache(key: string) {
+    await redis.del(key)
+}
+export{getCached,setCache,deleteCache}
