@@ -47,7 +47,8 @@ const loginUser=asyncHandler(async (req,res)=>{
     res.status(200).cookie("token",token,{
         httpOnly:true,
         secure:process.env.NODE_ENV==="production",
-        maxAge: 7 * 24 * 60 * 60 * 1000
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax"
 
 
     }).json(new ApiResponse(200,token,"Login Succesful"))
@@ -58,7 +59,8 @@ const logoutUser = asyncHandler(async (req, res) => {
       .status(200)
       .clearCookie("token", {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production"
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax"
       })
       .json(new ApiResponse(200, null, "Logged out successfully"))
 })
