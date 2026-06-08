@@ -9,7 +9,7 @@ export default function Login() {
     const [error,setError]=useState("");
     const navigate=useNavigate();
 
-    const handleSumbit=async (e)=>{
+    const handleSumbit=async (e:React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault();
         setLoading(true);
         try {
@@ -18,7 +18,7 @@ export default function Login() {
            
 
         } catch (error) {
-            setError(error?.response?.data?.message|| "Login Failed");
+            setError((error as any).response?.data?.message|| "Login Failed");
             
         }finally{
             setLoading(false);

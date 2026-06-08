@@ -22,7 +22,7 @@ export default function AIAnalysis() {
             
         } catch (error) {
             setLoading(false);
-            setError(error?.response?.data?.message|| "Analysis failed")
+            setError((error as any)?.response?.data?.message|| "Analysis failed")
             
         }finally{
             setLoading(false);

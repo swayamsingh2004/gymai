@@ -10,7 +10,7 @@ export default function Register() {
     const[loading,setLoading]=useState(false);
     const[error,setError]=useState("");
     const navigate=useNavigate();
-    const handleSubmit=async(e)=>{
+    const handleSubmit=async(e:React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault();
         setLoading(true);
         try {
@@ -18,7 +18,7 @@ export default function Register() {
             navigate('/login')
             
         } catch (error) {
-            setError(error?.response?.data?.message|| "Registeration Failed")
+            setError((error as any).response?.data?.message|| "Registeration Failed")
             
         }
         finally{

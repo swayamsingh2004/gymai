@@ -11,7 +11,7 @@ export default function LogWorkout() {
     const [error, setError] = useState("")
     const navigate=useNavigate();
 
-    const handleSubmit=async(e)=>{
+    const handleSubmit=async(e:React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault();
         setLoading(true)
 
@@ -20,7 +20,7 @@ export default function LogWorkout() {
                 navigate('/dashboard')
             
         } catch (error) {
-            setError(error?.response?.data?.message || "Failed to log workout")
+            setError((error as any).response?.data?.message || "Failed to log workout")
             
         }finally{
             setLoading(false)

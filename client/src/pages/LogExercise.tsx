@@ -26,7 +26,7 @@ export default function LogExercise() {
     setSets(updated)
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     setLoading(true)
     try {
@@ -37,7 +37,7 @@ export default function LogExercise() {
       })
       navigate('/dashboard')
     } catch (error) {
-      setError(error?.response?.data?.message || "Failed to log exercise")
+      setError((error as any).response?.data?.message || "Failed to log exercise")
     } finally {
       setLoading(false)
     }
