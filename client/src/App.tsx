@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes,Navigate} from "react-router-dom";
 import Login from "./pages/Login";
 import LogExercise from "./pages/LogExercise";
 import Register from "./pages/Register";
@@ -18,6 +18,8 @@ function App(){
         <Route path="/log-exercise/:workoutId" element={<ProtectedRoute><LogExercise/></ProtectedRoute>} />
         <Route path="/ai-analysis" element={<ProtectedRoute><AIAnalysis/></ProtectedRoute>} />
         <Route path="/workout/:workoutId" element={<ProtectedRoute><WorkoutDetail/></ProtectedRoute>} />
+        <Route path="/" element={<Navigate to="/login" />} />
+
         
       </Routes>
 
