@@ -18,6 +18,7 @@ const createWorkout=asyncHandler(async(req,res)=>{
         notes:notes
 
     })
+    req.log.info({ userId: req.user._id, workoutId: workout._id }, "Workout created")
     return res.status(201).json(new ApiResponse(201,workout,"Workout Created"))
 })
 
@@ -28,7 +29,7 @@ const getWorkouts=asyncHandler(async(req,res)=>{
     }
 
     const Workouts= await Workout.find({userId}).sort({date:-1});
-    
+    req.log.info({ userId: req.user._id }, "Fetched workouts")
     return res.status(200).json(new ApiResponse(200,Workouts,"Fetch Done"))
     
 
@@ -44,6 +45,7 @@ const getWorkoutById=asyncHandler(async(req,res)=>{
     if(!workout){
         throw new ApiError(400,"Not a valid workout id");
     }
+    req.log.info({ userId: req.user._id, workoutId: workout._id }, "Fetched workout by ID")
     res.status(200).json(new ApiResponse(200,workout,"Fetched"));
 })
 

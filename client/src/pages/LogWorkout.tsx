@@ -5,7 +5,7 @@ import api from "../api/axios";
 export default function LogWorkout() {
     const[muscleGroup,setmuscleGroup]=useState("")
     const[date,setDate]=useState("");
-    const [duration,setDuration]=useState(0);
+    const [duration,setDuration]=useState<any>("");
     const [notes,setnotes]=useState("");
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
@@ -20,7 +20,12 @@ export default function LogWorkout() {
                 navigate('/dashboard')
             
         } catch (error) {
-            setError((error as any).response?.data?.message || "Failed to log workout")
+            const data = (error as any).response?.data;
+    if (data?.errors?.length) {
+        setError(data.errors[0].message);
+    } else {
+        setError(data?.message || "Failed to log workout");
+    }
             
         }finally{
             setLoading(false)
@@ -78,8 +83,8 @@ export default function LogWorkout() {
         <div>
           <label className="text-xs text-gray-400 mb-1 block">Duration (mins) — optional</label>
           <input
-            type="number"
-            onChange={(e) => setDuration(Number(e.target.value))}
+            type="text"
+            onChange={(e) => setDuration(e.target.value as any)}
             className="w-full bg-gray-800 border border-gray-700 rounded px-4 py-3 
                        text-white text-sm focus:outline-none focus:border-green-400"
           />

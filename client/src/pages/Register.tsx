@@ -18,7 +18,12 @@ export default function Register() {
             navigate('/login')
             
         } catch (error) {
-            setError((error as any).response?.data?.message|| "Registeration Failed")
+            const data = (error as any).response?.data;
+    if (data?.errors?.length) {
+        setError(data.errors[0].message);
+    } else {
+        setError(data?.message || "Registration Failed");
+    }
             
         }
         finally{

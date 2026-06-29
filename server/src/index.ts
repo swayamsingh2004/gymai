@@ -1,6 +1,8 @@
 import dotenv from "dotenv"
 
 dotenv.config({path:'.env'})
+import pinoHttp from "pino-http";
+import logger from "./utils/logger";
 import authRouter from "./routes/auth.routes"
 import workoutRouter from "./routes/workout.routes"
 import exerciseRouter from "./routes/exercise.routes"
@@ -15,6 +17,7 @@ import cors from "cors"
 import express from "express"
 const app=express();
 app.use(express.json())
+app.use(pinoHttp({ logger }))
 app.use(cookieParser())
 
 app.use(cors({ origin: process.env.CLIENT_URL,credentials:true }))

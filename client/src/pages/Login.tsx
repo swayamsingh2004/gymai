@@ -18,7 +18,12 @@ export default function Login() {
            
 
         } catch (error) {
-            setError((error as any).response?.data?.message|| "Login Failed");
+            const data = (error as any).response?.data;
+    if (data?.errors?.length) {
+        setError(data.errors[0].message);
+    } else {
+        setError(data?.message || "Login Failed");
+    }
             
         }finally{
             setLoading(false);

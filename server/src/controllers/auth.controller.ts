@@ -22,6 +22,9 @@ const registerUser=asyncHandler(async (req,res)=>{
         password:hashedpassword
     })
     const createdUser = await User.findById(user._id).select("-password")
+      req.log.info({ userId: user._id }, "New user registered")
+
+
     return res.status(201).json(new ApiResponse(201,createdUser,"User created Succesfully"))
 
 
@@ -44,6 +47,7 @@ const loginUser=asyncHandler(async (req,res)=>{
         process.env.JWT_SECRET!,
         { expiresIn: "7d" }
 )
+    req.log.info({ userId: user._id, email: user.email }, "User logged in")
     res.status(200).cookie("token",token,{
         httpOnly:true,
         secure:process.env.NODE_ENV==="production",
@@ -55,6 +59,7 @@ const loginUser=asyncHandler(async (req,res)=>{
 
 })
 const logoutUser = asyncHandler(async (req, res) => {
+    req.log.info("User logged out")
     res
       .status(200)
       .clearCookie("token", {

@@ -14,4 +14,4 @@ async function getCached(key:string){
 async function deleteCache(key: string) {
     await redis.del(key)
 }
-export{getCached,setCache,deleteCache}
+export{getCached,setCache,deleteCache,redis}

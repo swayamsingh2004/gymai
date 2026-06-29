@@ -4,6 +4,7 @@ import Groq from "groq-sdk";
 import { ApiError } from "../utils/ApiError";
 const groq = new Groq({apiKey:process.env.GROQ_API_KEY})
 export async function analyzeWorkouts(workouts:any[]){
+    console.log("GROQ KEY:", process.env.GROQ_API_KEY)
     const workout=JSON.stringify(workouts);
     if(!workout){
         throw new ApiError(400,"Not a Valid Input");
@@ -54,7 +55,7 @@ const response = await groq.chat.completions.create({
     temperature: 0.7,
     max_tokens: 1000
 })
-
+console.log("GROQ KEY:", process.env.GROQ_API_KEY)
 return response.choices[0]?.message?.content || ""
 
 }

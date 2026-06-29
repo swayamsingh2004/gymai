@@ -6,12 +6,12 @@ export default function LogExercise() {
   const { workoutId } = useParams()
   const navigate = useNavigate()
   const [exerciseName, setExerciseName] = useState("")
-  const [sets, setSets] = useState([{ setNumber: 1, reps: 0, weight: 0 }])
+  const [sets, setSets] = useState([{ setNumber: 1, reps: '', weight: ''}])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
 
   const addSet = () => {
-    setSets([...sets, { setNumber: sets.length + 1, reps: 0, weight: 0 }])
+    setSets([...sets, { setNumber: sets.length + 1, reps: '', weight: '' }])
   }
 
   const removeSet = (index: number) => {
@@ -37,7 +37,12 @@ export default function LogExercise() {
       })
       navigate('/dashboard')
     } catch (error) {
-      setError((error as any).response?.data?.message || "Failed to log exercise")
+      const data = (error as any).response?.data;
+    if (data?.errors?.length) {
+        setError(data.errors[0].message);
+    } else {
+        setError(data?.message || "Failed to log exercise");
+    }
     } finally {
       setLoading(false)
     }
@@ -79,17 +84,17 @@ export default function LogExercise() {
                 <div key={index} className="flex gap-3 items-center">
                   <span className="text-xs text-gray-600 w-8">#{set.setNumber}</span>
                   <input
-                    type="number"
+                    type="text"
                     placeholder="Reps"
-                    onChange={(e) => updateSet(index, 'reps', Number(e.target.value))}
+                    onChange={(e) => updateSet(index, 'reps', e.target.value as any)}
                     className="flex-1 bg-gray-800 border border-gray-700 rounded px-3 py-2 
                                text-white text-sm placeholder-gray-500 focus:outline-none 
                                focus:border-green-400"
                   />
                   <input
-                    type="number"
+                    type="text"
                     placeholder="Weight (kg)"
-                    onChange={(e) => updateSet(index, 'weight', Number(e.target.value))}
+                    onChange={(e) => updateSet(index, 'weight', e.target.value as any)}
                     className="flex-1 bg-gray-800 border border-gray-700 rounded px-3 py-2 
                                text-white text-sm placeholder-gray-500 focus:outline-none 
                                focus:border-green-400"

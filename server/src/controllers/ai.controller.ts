@@ -10,6 +10,7 @@ const ai=asyncHandler(async(req,res)=>{
     const key=userId.toString();
     const cached= await getCached(key)
     if(cached){
+        req.log.info({ userId: req.user._id }, "Returning cached analysis")
        return  res.status(200).json(new ApiResponse(200,cached,"Cached"));
 
 
@@ -27,6 +28,7 @@ const ai=asyncHandler(async(req,res)=>{
         throw new ApiError(400,"Error occured while analysing")
     }
     await setCache(key,result)
+    req.log.info({ userId: req.user._id }, "Workout analysis completed")
     return res.status(200).json(new ApiResponse(200,result,"Succesfull"))
 
 

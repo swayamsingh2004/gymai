@@ -24,6 +24,7 @@ const addExercise=asyncHandler(async(req,res)=>{
 
 
     })
+    req.log.info({ userId: req.user._id, workoutId: workoutId, exerciseId: exercise._id }, "Exercise created")
     await deleteCache(req.user._id.toString())
 
     
@@ -40,6 +41,7 @@ const getExercises=asyncHandler(async(req,res)=>{
     if(!exercise){
         throw new ApiError(400,"Invalid WorkoutId")
     }
+    req.log.info({ userId: req.user._id, workoutId: workoutId }, "Fetched exercises")
     res.status(200).json(new ApiResponse(200,exercise,"fetched succesfully"))
 })
 export{addExercise,getExercises}
